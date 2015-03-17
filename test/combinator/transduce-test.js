@@ -58,21 +58,38 @@ describe('transduce', function() {
 			});
 	});
 
+	it('should allow late start', function() {
+		var a = [1, 2, 3];
+		var n = 2;
+
+		var s = transduce(t.drop(n), fromArray(a));
+
+		return reduce(function(results, x) {
+			return results.concat(x);
+		}, [], s)
+			.then(function(results) {
+				expect(results).toEqual(a.slice(n));
+			});
+	});
+
 	it('should propagate remaining items', function() {
+		var a = 5;
 		var td = t.partitionBy(function(x) {
-			return x < 5;
+			return x < a;
 		});
 
-		var s = transduce(td, fromArray([1,2,3,4,5,6,7,8,9]));
+		var input = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+		var s = transduce(td, fromArray(input));
 
 		return reduce(function(results, x) {
 			results.push(x);
 			return results;
 		}, [], s)
 			.then(function(results) {
+				var i = input.indexOf(a);
 				expect(results).toEqual([
-					[1,2,3,4],
-					[5,6,7,8,9]
+					input.slice(0, i),
+					input.slice(i)
 				]);
 			});
 	});
