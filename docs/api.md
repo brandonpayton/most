@@ -315,7 +315,7 @@ most.fromEvent(eventType, source): -a--b-c---d->
 
 Create a stream containing events from the provided [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget), such as a DOM element, or [EventEmitter](http://nodejs.org/api/events.html#events_class_events_eventemitter).  This provides a simple way to coerce existing event sources into streams.
 
-Note that when the stream ends (for example, by using [take](#take), [takeUntil](#until), etc.), it will automatically be disconnected from the event source.  For example, in the case of DOM events, the underlying DOM event listener will be removed automatically.
+Note that when the stream ends (for example, by using [take](#take), [](#until), etc.), it will automatically be disconnected from the event source.  For example, in the case of DOM events, the underlying DOM event listener will be removed automatically.
 
 ```js
 var clicks = most.fromEvent('click', document.querySelector('.the-button'));
@@ -894,7 +894,7 @@ If `endSignal` is empty or never emits an event, then the returned stream will b
 // Log mouse events until the user clicks. Note that DOM event handlers will
 // automatically be unregistered.
 most.fromEvent('mousemove', document)
-	.until(most.fromEvent('click', document)
+	.until(most.fromEvent('click', document))
 	.forEach(console.log.bind(console));
 ```
 
